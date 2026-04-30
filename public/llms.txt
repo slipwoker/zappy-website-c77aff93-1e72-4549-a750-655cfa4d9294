@@ -1,0 +1,79 @@
+# Business — Generative Engine Optimization Map
+
+---
+
+## Pages
+
+### בית
+https://example.com
+ברוכים הבאים לעולמה של אנה, נסיכה אמיצה במסע בלתי נשכח! תחפושות פנטזיה, צעצועים, ספרים ועיצוב מרהיב — מותג הדמיון שישנה את עולמכם ב־2028.
+
+### יקום הסיפורים
+https://example.com/story-universe
+גלו את עולמה הקסום של אנה: נסיכה בת 14 הנלחמת בעוולות, מצחיקה עם כלבה מאטי ומחפשת אבן קסמים. יקום עשיר בעוז, אהבה והומור שמחכה לכם להיכנס אליו.
+
+### חוויית מותג
+https://example.com/brand-experience
+משחקי קופסה, תחפושות פנטזיה ומדע בדיוני, צעצועים ומתנות לאוהבי פנטזיה ועיצוב חדרים בינה מלאכותית — חווית מותג שלמה שתהפוך כל רגע לקסום ובלתי נשכח.
+
+### צור קשר
+https://example.com/contact
+רוצים לשמוע עוד על תחפושות, צעצועים ומוצרי הפנטזיה שלנו? צרו קשר עוד היום וקבלו עדכון ראשונים על השקת המותג הקסום ב־2028. אנחנו כאן בשבילכם!
+
+### Products
+https://example.com/products
+המוצרים שלנו - אנה ואבן הקסמים
+
+### Cart
+https://example.com/cart
+עגלת הקניות שלך
+
+### Checkout
+https://example.com/checkout
+תשלום
+
+### Login
+https://example.com/login
+התחברות לקוחות
+
+### Account
+https://example.com/account
+החשבון שלי
+
+### Order Success
+https://example.com/order-success
+תודה על ההזמנה
+
+### Product Detail
+https://example.com/product/:slug
+פרטי המוצר - אנה ואבן הקסמים
+
+### Category
+https://example.com/category/:slug
+מוצרים - אנה ואבן הקסמים
+
+## Legal & Policy
+
+### Privacy Policy
+https://example.com/privacy
+Information about how user data is collected, stored, and protected.
+
+### Terms & Conditions
+https://example.com/terms
+Legal terms describing service usage, rights, and policies.
+
+### Accessibility Statement
+https://example.com/accessibility
+Information about WCAG compliance and accessibility features.
+
+---
+
+# Business Context (for LLM understanding)
+
+## About Business
+---
+
+# Additional Resources
+
+- **Sitemap**: https://example.com/sitemap.xml
+- **Robots.txt**: https://example.com/robots.txt

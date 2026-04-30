@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>צללי לתוך יקום הסיפורים המרתק — אנה ואבן הקסמים</title>
+    <meta name="description" content="גלו את עולמה הקסום של אנה: נסיכה בת 14 הנלחמת בעוולות, מצחיקה עם כלבה מאטי ומחפשת אבן קסמים. יקום עשיר בעוז, אהבה והומור שמחכה לכם להיכנס אליו.">
+    <meta name="keywords" content="יקום פנטזיה מקורי, סיפור אנה ואבן הקסמים, ספרות פנטזיה לנוער, הרפתקאות פנטזיה, עולם אנתרופומורפי">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: 'c77aff93-1e72-4549-a750-655cfa4d9294',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+    <meta property="og:title" content="צללי לתוך יקום הסיפורים המרתק — אנה ואבן הקסמים">
+    <meta property="og:description" content="גלו את עולמה הקסום של אנה: נסיכה בת 14 הנלחמת בעוולות, מצחיקה עם כלבה מאטי ומחפשת אבן קסמים. יקום עשיר בעוז, אהבה והומור שמחכה לכם להיכנס אליו.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="צללי לתוך יקום הסיפורים המרתק — אנה ואבן הקסמים">
+    <meta name="twitter:description" content="גלו את עולמה הקסום של אנה: נסיכה בת 14 הנלחמת בעוולות, מצחיקה עם כלבה מאטי ומחפשת אבן קסמים. יקום עשיר בעוז, אהבה והומור שמחכה לכם להיכנס אליו.">
+    <meta property="og:type" content="website">
+  <meta property="og:locale" content="he_IL">
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css">
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
+    <!-- Mickidum Accessibility Toolbar -->
+    <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: var(--text-dark, #333) !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+      [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 10px !important; padding-right: 28px !important; }
+      .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus (exclude catalog sub-menus that use <a> children instead of <li>) */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))):not(:has(> a)), .sub-menu:not(:has(li)):not(:has(> a)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .navbar .sub-menu.mobile-expanded, .nav-menu .sub-menu.mobile-expanded, #navMenu .sub-menu.mobile-expanded { max-height: none !important; overflow-y: visible !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; position: relative !important; min-height: 44px !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; min-width: 0 !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; min-width: 0 !important; padding: 0 !important; line-height: inherit !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu, .navbar li:has(.sub-menu) > .sub-menu, #navMenu li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: auto !important; background: transparent !important; border: none !important; cursor: pointer !important; color: var(--text-light) !important; position: static !important; flex-shrink: 0 !important; align-self: stretch !important; z-index: 2 !important; padding: 0 !important; margin: 0 !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; color: var(--text-light) !important; white-space: normal !important; }
+        .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+        [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 0 !important; padding-right: 28px !important; }
+        .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+        .nav-menu.active, #navMenu.active { max-width: 100vw !important; overflow-x: hidden !important; box-sizing: border-box !important; }
+        .navbar .sub-menu li a, nav.navbar .sub-menu li a, .zappy-products-dropdown .sub-menu a { color: var(--text-light) !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+
+    <style id="mobile-lang-menu-deployed-css">
+    @media (max-width: 768px) {
+      .lang-switcher,
+      .nav-cta-container .lang-switcher,
+      .nav-container .lang-switcher,
+      .navbar .lang-switcher,
+      .navbar .nav-cta-container .lang-switcher,
+      .nav-icons-left .lang-switcher,
+      .nav-ecommerce-icons .lang-switcher { display: none !important; }
+      .mobile-lang-menu { width: 100%; border-top: 1px solid rgba(128,128,128,0.2); padding: 8px 0 0 0; margin-top: 8px; }
+      .mobile-lang-toggle { display: flex !important; align-items: center; justify-content: space-between; width: 100%; padding: 12px 16px; background: none; border: none; cursor: pointer; font-size: 15px; color: inherit; font-family: inherit; }
+      .mobile-lang-toggle::after { content: ''; display: inline-block; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform 0.3s ease; margin-left: 8px; }
+      .mobile-lang-toggle.expanded::after { transform: rotate(-135deg); }
+      .mobile-lang-options { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+      .mobile-lang-options.expanded { max-height: 300px; }
+      .mobile-lang-option { display: flex !important; align-items: center; gap: 10px; padding: 10px 24px; text-decoration: none; color: inherit; font-size: 14px; font-family: inherit; }
+      .mobile-lang-option:hover { background: rgba(128,128,128,0.1); }
+      .mobile-lang-option.active { font-weight: 600; opacity: 0.7; pointer-events: none; }
+      .mobile-lang-option img { width: 20px; height: 20px; border-radius: 50%; }
+    }
+    @media (min-width: 769px) {
+      .mobile-lang-menu { display: none !important; }
+    }
+    </style>
+
+    <style id="zappy-widget-visibility">
+      #mic-access-tool-general-button, .mic-access-tool-general-button,
+      #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+      ._access-icon, #mic-access-tool-box, .mic-access-tool-box,
+      #mic-init-access-tool #mic-access-tool-box, div[id*="mic-access-tool-box"], ._access-menu {
+        display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important;
+      }
+    </style>
+</head>
+<body>
+
+
+    <div class="mobile-search-panel" id="mobile-search-panel">
+      <div class="search-wrapper">
+        <input type="text" id="mobile-search-input" placeholder="חיפוש מוצרים..." autocomplete="off">
+        <button class="search-submit" id="mobile-search-submit" title="חיפוש">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
+        </button>
+        <button class="close-search" id="close-mobile-search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <div class="search-results" id="mobile-search-results"></div>
+    </div>
+  
+<script>window.ZAPPY_WEBSITE_ID = "c77aff93-1e72-4549-a750-655cfa4d9294";window.ZAPPY_API_BASE = (window.location.pathname.includes('/preview') ? "https://api.zappy5.com" : "https://api.zappy5.com");</script>
+  <nav class="navbar" dir="rtl">
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display: none;">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+
+  <button class="phone-header-btn" data-phone="[business_phone]" aria-label="Call">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  </button>
+
+  <div class="nav-container">
+    <div class="nav-right-group"><div class="nav-brand">
+      <a href="/" class="logo-link">
+        <img src="/assets/logo.webp" alt="אנה ואבן הקסמים" class="logo">
+      </a>
+    </div><ul class="nav-menu" id="navMenu">
+
+    <li class="menu-item-has-children zappy-products-dropdown">
+      <a href="/products">
+        מוצרים
+        <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 9l6 6 6-6"></path>
+        </svg>
+      </a>
+      <ul class="sub-menu" id="zappy-nav-category-links">
+        <li><a href="/products">כל המוצרים</a></li>
+        <!-- Categories will be loaded dynamically -->
+      </ul>
+    </li>
+  <li><a href="/story-universe">✦
+          יקום הסיפורים</a></li><li><a href="/brand-experience">✦
+          חוויית מותג</a></li><li><a href="/contact">צור קשר</a></li></ul><div class="nav-ecommerce-icons nav-icons-left"><a href="/login" class="login-link nav-login" title="התחברות"><svg class="login-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a><a href="#cart" class="cart-link nav-cart" id="cart-drawer-toggle" title="עגלת קניות"><svg class="cart-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><span class="cart-count">0</span></a><div class="nav-search-box">
+    <input type="text" class="nav-search-input" id="nav-search-input" placeholder="חיפוש מוצרים..." autocomplete="off">
+    <button class="nav-search-btn" id="nav-search-btn" title="חיפוש">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
+    </button>
+    <div class="nav-search-results" id="nav-search-results"></div>
+  </div></div><div class="nav-ecommerce-icons nav-icons-right"><button class="nav-search-toggle" id="mobile-search-toggle" title="חיפוש"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg></button></div></div>
+
+    
+
+    
+  </div>
+</nav>
+<script>
+
+// Navbar Mobile Menu Toggle and Contrast Fix
+(function() {
+  // Use 'load' event instead of 'DOMContentLoaded' to ensure we run AFTER all other scripts
+  window.addEventListener('load', function() {
+    
+    // FIX MOBILE BUTTON CONTRAST
+    // Detect navbar background color and apply contrasting color to mobile buttons
+    const navbar = document.querySelector('.navbar, nav, header');
+    if (!navbar) {
+      console.log('[Navbar] Navbar element not found');
+      return;
+    }
+    
+    // DECLARE VARIABLES EARLY to avoid Temporal Dead Zone errors
+    // These are used in multiple places below
+    let mobileToggle = document.getElementById('mobileToggle') ||
+                       document.querySelector('.mobile-toggle') ||
+                       document.querySelector('.hamburger') ||
+                       document.querySelector('.hamburger-menu') ||
+                       document.querySelector('.menu-toggle') ||
+                       document.querySelector('.burger-menu') ||
+                       document.querySelector('[aria-label="Menu"]') ||
+                       document.querySelector('[aria-label="תפריט"]');
+    
+    const phoneBtn = document.querySelector('.phone-header-btn');
+    
+    const computedStyle = window.getComputedStyle(navbar);
+    let bgColor = computedStyle.backgroundColor;
+    
+    console.log('[Navbar] Initial navbar background:', bgColor);
+    
+    // Check if background is transparent or rgba with 0 alpha
+    const isTransparent = bgColor === 'transparent' || 
+                         bgColor === 'rgba(0, 0, 0, 0)' ||
+                         (bgColor.startsWith('rgba') && bgColor.includes(', 0)'));
+    
+    if (isTransparent) {
+      // Check for background-image or gradient
+      const bgImage = computedStyle.backgroundImage;
+      if (bgImage && bgImage !== 'none') {
+        console.log('[Navbar] Navbar has background image/gradient, using dark text');
+        bgColor = 'rgb(240, 240, 240)'; // Assume light background
+      } else {
+        // Transparent navbar - check body background
+        const bodyBg = window.getComputedStyle(document.body).backgroundColor;
+        console.log('[Navbar] Navbar transparent, using body background:', bodyBg);
+        bgColor = bodyBg;
+      }
+    }
+    
+    // Calculate luminance to determine if background is light or dark
+    const rgb = bgColor.match(/\d+/g);
+    if (rgb && rgb.length >= 3) {
+      const r = parseInt(rgb[0]);
+      const g = parseInt(rgb[1]);
+      const b = parseInt(rgb[2]);
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      
+      // Mobile button colors are set by Claude's AI-generated CSS (same as .nav-menu a)
+      // No dynamic color overrides needed - colors come from the generated navbar CSS
+      console.log('[Navbar] Mobile button colors preserved from Claude CSS (luminance:', luminance.toFixed(2) + ')');
+      
+      // FIX ICON SIZES - Ensure SVGs are properly sized and visible
+      // INJECT CRITICAL CSS TO OVERRIDE ANY CONFLICTING RULES
+      const criticalCSS = document.createElement('style');
+      criticalCSS.id = 'zappy-mobile-nav-fix';
+      const htmlLang = document.documentElement.lang || 'en';
+      const htmlDir = document.documentElement.dir || 'ltr';
+      // Check both dir attribute AND lang for RTL detection
+      // dir="rtl" is the most reliable indicator
+      const isRTL = htmlDir === 'rtl' || htmlLang === 'he' || htmlLang === 'ar';
+      
+      criticalCSS.textContent = `
+        /* Hide mobile buttons on desktop, show only on mobile */
+        @media (min-width: 769px) {
+          .mobile-toggle,
+          .phone-header-btn {
+            display: none !important;
+          }
+        }
+        
+        /* Show and position mobile buttons correctly on mobile */
+        @media (max-width: 768px) {
+          .mobile-toggle,
+          .phone-header-btn {
+            position: absolute !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            z-index: 1001 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+            border: none !important;
+            cursor: pointer !important;
+            padding: 6px !important;
+            background: none !important;
+            color: var(--nav-text, var(--text-light)) !important;
+          }
+          
+          /* LTR positioning (default): hamburger LEFT, phone RIGHT */
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .mobile-toggle,
+          html[dir="ltr"] .mobile-toggle {
+            left: 12px !important;
+            right: auto !important;
+          }
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .phone-header-btn,
+          html[dir="ltr"] .phone-header-btn {
+            right: 12px !important;
+            left: auto !important;
+          }
+          
+          /* RTL positioning: hamburger RIGHT, phone LEFT */
+          html[dir="rtl"] .mobile-toggle,
+          html[lang="he"] .mobile-toggle,
+          html[lang="ar"] .mobile-toggle {
+            right: 12px !important;
+            left: auto !important;
+          }
+          html[dir="rtl"] .phone-header-btn,
+          html[lang="he"] .phone-header-btn,
+          html[lang="ar"] .phone-header-btn {
+            left: 12px !important;
+            right: auto !important;
+          }
+          
+          /* CRITICAL: Ensure nav-container has min-height on mobile */
+          /* All children are positioned absolutely/fixed on mobile, so height:auto collapses to 0 */
+          .nav-container {
+            min-height: 70px !important;
+            position: relative !important;
+          }
+          
+          /* Ensure SVG icons are properly sized and inherit color */
+          .mobile-toggle svg,
+          .phone-header-btn svg {
+            width: 24px !important;
+            height: 24px !important;
+            /* Don't force display - let JavaScript control hamburger/close toggle */
+          }
+          
+          /* Reset nav-cta-container on mobile - remove desktop box-shadow/padding */
+          /* that creates a visible ghost box when CTA button is hidden */
+          .nav-cta-container {
+            box-shadow: none !important;
+            padding: 0 !important;
+          }
+          
+          /* Hide nav-cta-container entirely on mobile when there's no lang-switcher */
+          /* (only the CTA button is inside, and it's hidden on mobile) */
+          .nav-cta-container:not(:has(.lang-switcher)) {
+            display: none !important;
+          }
+          
+          /* CRITICAL: Prevent hero image fade gradient from bleeding over headline text */
+          /* The .image-fade-gradient has bottom: -30px (extends below parent) */
+          /* On mobile stacked layout, this overlaps the h1 text below the image */
+          .hero-image-column {
+            overflow: hidden !important;
+          }
+          .image-fade-gradient {
+            bottom: 0 !important;
+          }
+          
+          /* Hide desktop language switcher on mobile - hamburger menu handles it */
+          /* High specificity to override stored CSS */
+          .lang-switcher,
+          .nav-cta-container .lang-switcher,
+          .nav-container .lang-switcher,
+          .navbar .lang-switcher,
+          .navbar .nav-cta-container .lang-switcher {
+            display: none !important;
+          }
+        }
+      `;
+      
+      // Remove existing fix if present and inject new one
+      const existing = document.getElementById('zappy-mobile-nav-fix');
+      if (existing) existing.remove();
+      document.head.appendChild(criticalCSS);
+      
+      console.log('[Navbar] Critical CSS injected for mobile nav positioning');
+      
+      // ONLY apply inline positioning styles on mobile viewport
+      // On desktop, the CSS handles hiding these buttons with display: none
+      // Inline styles were breaking desktop layout by overriding CSS
+      const isMobileViewport = window.innerWidth <= 768;
+      
+      if (mobileToggle) {
+        // Icon sizing applies to all viewports for consistency
+        const hamburgerIcon = mobileToggle.querySelector('.hamburger-icon');
+        const closeIcon = mobileToggle.querySelector('.close-icon');
+        
+        if (hamburgerIcon) {
+          hamburgerIcon.style.setProperty('width', '24px', 'important');
+          hamburgerIcon.style.setProperty('height', '24px', 'important');
+          hamburgerIcon.style.setProperty('display', 'block', 'important'); // Show hamburger by default
+        }
+        if (closeIcon) {
+          closeIcon.style.setProperty('width', '24px', 'important');
+          closeIcon.style.setProperty('height', '24px', 'important');
+          closeIcon.style.setProperty('display', 'none', 'important'); // Hide close icon by default
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          mobileToggle.style.setProperty('position', 'absolute', 'important');
+          mobileToggle.style.setProperty('top', '50%', 'important');
+          mobileToggle.style.setProperty('transform', 'translateY(-50%)', 'important');
+          mobileToggle.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          
+          console.log('[Navbar] Mobile toggle positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          mobileToggle.style.removeProperty('position');
+          mobileToggle.style.removeProperty('top');
+          mobileToggle.style.removeProperty('transform');
+          mobileToggle.style.removeProperty('z-index');
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared mobile toggle inline positioning');
+        }
+      }
+      
+      if (phoneBtn) {
+        // Icon sizing applies to all viewports
+        const phoneIcon = phoneBtn.querySelector('svg');
+        if (phoneIcon) {
+          phoneIcon.style.width = '24px';
+          phoneIcon.style.height = '24px';
+          phoneIcon.setAttribute('width', '24');
+          phoneIcon.setAttribute('height', '24');
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          phoneBtn.style.setProperty('position', 'absolute', 'important');
+          phoneBtn.style.setProperty('top', '50%', 'important');
+          phoneBtn.style.setProperty('transform', 'translateY(-50%)', 'important');
+          phoneBtn.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          
+          console.log('[Navbar] Phone button positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          phoneBtn.style.removeProperty('position');
+          phoneBtn.style.removeProperty('top');
+          phoneBtn.style.removeProperty('transform');
+          phoneBtn.style.removeProperty('z-index');
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared phone button inline positioning');
+        }
+      }
+    } else {
+      console.log('[Navbar] Could not parse background color:', bgColor);
+    }
+    
+    // MOBILE MENU TOGGLE
+    // Re-query in case DOM changed (mobileToggle already declared at top of function)
+    mobileToggle = document.getElementById('mobileToggle') ||
+                   document.querySelector('.mobile-toggle') ||
+                   document.querySelector('.hamburger') ||
+                   document.querySelector('.hamburger-menu') ||
+                   document.querySelector('.menu-toggle') ||
+                   document.querySelector('.burger-menu') ||
+                   document.querySelector('[aria-label="Menu"]') ||
+                   document.querySelector('[aria-label="תפריט"]');
+    
+    // EXPANDED SEARCH: Find nav menu by ID or class
+    const navMenu = document.getElementById('navMenu') ||
+                  document.querySelector('.nav-menu') ||
+                  document.querySelector('.nav-links') ||
+                  document.querySelector('nav ul:not(.submenu)');
+    
+    if (!mobileToggle || !navMenu) {
+      console.log('[Navbar] Mobile toggle or menu not found:', { toggle: !!mobileToggle, menu: !!navMenu });
+      return;
+    }
+    
+    // Ensure navMenu has ID for CSS targeting
+    if (!navMenu.id) {
+      navMenu.id = 'navMenu';
+    }
+    
+    console.log('[Navbar] Initializing mobile menu...');
+    
+    // Remove any existing event listeners by cloning the button
+    const newToggle = mobileToggle.cloneNode(true);
+    mobileToggle.parentNode.replaceChild(newToggle, mobileToggle);
+    
+    // Toggle menu on button click - use newToggle now
+    newToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const hamburgerIcon = this.querySelector('.hamburger-icon');
+      const closeIcon = this.querySelector('.close-icon');
+      const isActive = navMenu.classList.contains('active');
+      
+      if (isActive) {
+        // Close menu
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed');
+      } else {
+        // Open menu
+        navMenu.classList.add('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'none', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'block', 'important');
+        document.body.style.overflow = 'hidden';
+        console.log('[Navbar] Menu opened');
+      }
+    });
+    
+    // Close menu when clicking nav links (but NOT dropdown toggles)
+    const navLinks = navMenu.querySelectorAll('a');
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        // Don't close if it's a dropdown child (unless it's a real navigation link)
+        if (this.getAttribute('href') === '#') return;
+        
+        const hamburgerIcon = newToggle.querySelector('.hamburger-icon');
+        const closeIcon = newToggle.querySelector('.close-icon');
+        
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed (link clicked)');
+      });
+    });
+    
+    // DROPDOWN MENU TOGGLE (for mobile and touch devices)
+    var dropdownToggles = navMenu.querySelectorAll('.dropdown-toggle');
+    dropdownToggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var parent = this.closest('.nav-dropdown');
+        if (!parent) return;
+        
+        // Close other open dropdowns at the same level
+        var siblings = parent.parentNode.querySelectorAll('.nav-dropdown.open');
+        siblings.forEach(function(sib) {
+          if (sib !== parent) sib.classList.remove('open');
+        });
+        
+        parent.classList.toggle('open');
+        console.log('[Navbar] Dropdown toggled:', parent.classList.contains('open') ? 'open' : 'closed');
+      });
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav-dropdown')) {
+        var openDropdowns = document.querySelectorAll('.nav-dropdown.open');
+        openDropdowns.forEach(function(dd) { dd.classList.remove('open'); });
+      }
+    });
+    
+    console.log('[Navbar] Dropdown handlers initialized for ' + dropdownToggles.length + ' dropdowns');
+    
+    // Phone button functionality (phoneBtn already declared at top of function)
+    if (phoneBtn) {
+      phoneBtn.addEventListener('click', function() {
+        // Get phone number from placeholder in page or use default
+        const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+        const phoneNumber = phoneLinks.length > 0 
+          ? phoneLinks[0].getAttribute('href').replace('tel:', '')
+          : '[business_phone]';
+        
+        window.location.href = 'tel:' + phoneNumber;
+        console.log('[Navbar] Phone button clicked');
+      });
+    }
+    
+    console.log('[Navbar] Mobile menu initialized successfully');
+    
+    // === WHATSAPP BUTTON VISIBILITY FIX ===
+    // Ensure WhatsApp floating button is hidden on desktop and visible on mobile
+    // IMPORTANT: Only target the floating button by its class, NOT generic wa.me links
+    const handleWhatsAppVisibility = function() {
+      const whatsappBtn = document.querySelector('.whatsapp-float');
+      if (whatsappBtn) {
+        const isDesktop = window.innerWidth >= 769;
+        if (isDesktop) {
+          whatsappBtn.style.setProperty('display', 'none', 'important');
+          whatsappBtn.style.setProperty('visibility', 'hidden', 'important');
+          whatsappBtn.style.setProperty('opacity', '0', 'important');
+          whatsappBtn.style.setProperty('pointer-events', 'none', 'important');
+          console.log('[WhatsApp] Button hidden on desktop');
+        } else {
+          whatsappBtn.style.removeProperty('display');
+          whatsappBtn.style.removeProperty('visibility');
+          whatsappBtn.style.removeProperty('opacity');
+          whatsappBtn.style.removeProperty('pointer-events');
+          console.log('[WhatsApp] Button visible on mobile');
+        }
+      }
+    };
+    
+    // Run on load
+    handleWhatsAppVisibility();
+    
+    // Run on resize with debouncing
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(handleWhatsAppVisibility, 100);
+    });
+  });
+})();
+
+</script>
+  
+  <main>
+    <section class="story-universe-intro-section" data-layout-spec="יקום הסיפורים-intro" dir="rtl">
+
+  <!-- Decorative parchment grain overlay -->
+  <div class="sui-parchment-overlay" aria-hidden="true"></div>
+
+  <!-- Decorative corner flourish -->
+  <svg class="sui-corner-flourish" aria-hidden="true" data-no-icon-edit="true" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" width="160" height="160">
+    <g fill="none" stroke="#C9A84C" stroke-width="1.2" opacity="0.32">
+      <path d="M160,0 Q120,20 100,60 Q80,100 60,120 Q40,140 0,160"></path>
+      <path d="M160,20 Q130,35 115,70 Q100,105 80,125 Q60,145 20,160"></path>
+      <circle cx="155" cy="8" r="3" fill="#C9A84C" opacity="0.4"></circle>
+      <circle cx="148" cy="18" r="2" fill="#C9A84C" opacity="0.3"></circle>
+      <circle cx="140" cy="30" r="1.5" fill="#C9A84C" opacity="0.25"></circle>
+      <path d="M145,5 Q152,12 148,20 Q144,28 138,26 Q132,24 135,16 Q138,8 145,5 Z" stroke="#C9A84C" stroke-width="1" opacity="0.3"></path>
+    </g>
+  </svg>
+
+  <!-- Decorative star scatter -->
+  <svg class="sui-star-scatter" aria-hidden="true" data-no-icon-edit="true" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg" width="200" height="300">
+    <g fill="#FFD700" opacity="0.18">
+      <polygon points="20,10 22,16 28,16 23,20 25,26 20,22 15,26 17,20 12,16 18,16"></polygon>
+      <polygon points="80,40 81.5,45 87,45 82.5,48 84,53 80,50 76,53 77.5,48 73,45 78.5,45"></polygon>
+      <circle cx="160" cy="20" r="2.5"></circle>
+      <circle cx="140" cy="70" r="1.8"></circle>
+      <circle cx="30" cy="90" r="2"></circle>
+      <polygon points="170,120 171.5,125 177,125 172.5,128 174,133 170,130 166,133 167.5,128 163,125 168.5,125"></polygon>
+      <circle cx="50" cy="160" r="1.5"></circle>
+      <circle cx="185" cy="200" r="2.2"></circle>
+      <polygon points="100,230 101.2,234 105,234 102,236.5 103.2,240.5 100,238 96.8,240.5 98,236.5 95,234 98.8,234"></polygon>
+      <circle cx="15" cy="260" r="1.8"></circle>
+    </g>
+  </svg>
+
+  <div class="sui-container">
+
+    <!-- Wide atmospheric image at top -->
+    <figure class="sui-hero-image-wrap">
+      <img data-placeholder="story-universe-intro-image-1" data-context="A wide cinematic panoramic illustration of a magical fantasy world — an ancient parchment map coming to life, showing misty lavender mountains, enchanted forests, a royal castle in the distance, and winding golden route lines across the landscape. In the foreground, a young princess silhouette with a glowing magical stone, accompanied by a funny anthropomorphic dog and a young companion. The atmosphere is epic, whimsical, and emotionally rich — lavender and deep indigo tones with golden light rays breaking through misty clouds. Fantasy book cover quality illustration." width="1200" height="480" src="/assets/site-story-universe-intro-image-1.webp" alt="יקום הסיפור של אנה ואבן הקסמים — עולם פנטזיה מאויר" class="sui-hero-image">
+      <!-- Gradient overlay for readability -->
+      <div class="sui-image-overlay" aria-hidden="true"></div>
+
+      <!-- Compass decorative motif -->
+      <svg class="sui-compass" aria-hidden="true" data-no-icon-edit="true" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="80" height="80">
+        <circle cx="40" cy="40" r="36" fill="none" stroke="#C9A84C" stroke-width="1" opacity="0.55"></circle>
+        <circle cx="40" cy="40" r="28" fill="none" stroke="#C9A84C" stroke-width="0.7" opacity="0.4"></circle>
+        <line x1="40" y1="4" x2="40" y2="76" stroke="#C9A84C" stroke-width="0.8" opacity="0.35"></line>
+        <line x1="4" y1="40" x2="76" y2="40" stroke="#C9A84C" stroke-width="0.8" opacity="0.35"></line>
+        <polygon points="40,10 43,38 40,34 37,38" fill="#C9A84C" opacity="0.7"></polygon>
+        <polygon points="40,70 43,42 40,46 37,42" fill="#FFD700" opacity="0.45"></polygon>
+        <circle cx="40" cy="40" r="4" fill="#C9A84C" opacity="0.6"></circle>
+        <text x="40" y="22" text-anchor="middle" fill="#C9A84C" font-size="7" opacity="0.6" font-family="serif">צ</text>
+        <text x="40" y="62" text-anchor="middle" fill="#C9A84C" font-size="7" opacity="0.6" font-family="serif">ד</text>
+      </svg>
+    </figure>
+
+    <!-- Route line decorative divider -->
+    <div class="sui-route-line" aria-hidden="true">
+      <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 800 20" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="20">
+        <path d="M0,10 Q40,4 80,10 T160,10 T240,10 T320,10 T400,10 T480,10 T560,10 T640,10 T720,10 T800,10" fill="none" stroke="#C9A84C" stroke-width="1" stroke-dasharray="6,8" opacity="0.4"></path>
+        <circle cx="0" cy="10" r="3" fill="#C9A84C" opacity="0.5"></circle>
+        <circle cx="200" cy="10" r="2.5" fill="#C9A84C" opacity="0.4"></circle>
+        <circle cx="400" cy="10" r="3" fill="#C9A84C" opacity="0.5"></circle>
+        <circle cx="600" cy="10" r="2.5" fill="#C9A84C" opacity="0.4"></circle>
+        <circle cx="800" cy="10" r="3" fill="#C9A84C" opacity="0.5"></circle>
+      </svg>
+    </div>
+
+    <!-- Text content surface -->
+    <div class="sui-text-surface">
+
+      <!-- Chapter label -->
+      <div class="sui-chapter-label">
+        <span class="sui-chapter-line" aria-hidden="true"></span>
+        <span class="sui-chapter-text">פרק ראשון</span>
+        <span class="sui-chapter-line" aria-hidden="true"></span>
+      </div>
+
+      <h1 class="sui-heading">יקום הסיפורים — עולם שבו האומץ הוא המפה</h1>
+
+      <p class="sui-lead">בעולם שבו בני אדם וחיות מואנשות חיים בנפרד, מופרדים על ידי חוקים עתיקים ומלאי דעות קדומות, נולדה נסיכה אחת שסירבה לקבל את הגזרה. אנה, בת ה-14, לא רצתה כתר — היא רצתה הרפתקה.</p>
+
+      <p class="sui-body">ביום הולדתה ה-14, כאשר הכל היה אמור להיות חגיגה וזוהר, נחטפו הוריה — המלך והמלכה — ועולמה התהפך. עם לבה השבור ורוחה הבלתי שבורה, יצאה אנה לדרך: לצידה בן זוגה האמיץ, שהמסע מקרב אותם יותר ויותר, ומאטי — הכלב המואנש המצחיק, הכסיל, והאהוב ביותר שאפשר לדמיין.</p>
+
+      <p class="sui-body">יחד הם יחפשו את <strong>אבן הקסמים</strong> — פריט עתיק שיכול להשיב את הוריה. אבל הדרך מלאה באויבים שמעבר לכל דמיון, בבחירות שמשנות גורלות, ובאמת שמאתגרת את כל מה שאנה האמינה בו. זהו סיפור על אומץ, אהבה, הומור — ועל עולם שצריך להשתנות.</p>
+
+      <!-- Thematic pillars -->
+      <ul class="sui-pillars">
+        <li class="sui-pillar-item">
+          <span class="sui-pillar-icon" aria-hidden="true">⚔️</span>
+          <span class="sui-pillar-text">הרפתקה ואומץ</span>
+        </li>
+        <li class="sui-pillar-item">
+          <span class="sui-pillar-icon" aria-hidden="true">💜</span>
+          <span class="sui-pillar-text">אהבה והומור</span>
+        </li>
+        <li class="sui-pillar-item">
+          <span class="sui-pillar-icon" aria-hidden="true">🌍</span>
+          <span class="sui-pillar-text">צדק חברתי</span>
+        </li>
+        <li class="sui-pillar-item">
+          <span class="sui-pillar-icon" aria-hidden="true">✨</span>
+          <span class="sui-pillar-text">קסם ועיצוב</span>
+        </li>
+      </ul>
+
+      <!-- CTA -->
+      <div class="sui-cta-row">
+        <a href="#story" class="btn-primary sui-btn-cta">
+          <i class="fa-solid fa-book-open" aria-hidden="true"></i>
+          גלו את הסיפור המלא
+        </a>
+        <a href="#products" class="btn-ghost sui-btn-ghost">לעולם המוצרים ←</a>
+      </div>
+
+      <!-- Launch badge -->
+      <div class="sui-launch-badge">
+        <span class="sui-badge-dot" aria-hidden="true"></span>
+        <span>המותג מושק ב-2028 — הצטרפו לעולם כבר עכשיו</span>
+      </div>
+
+    </div>
+    <!-- /text surface -->
+
+  </div>
+  <!-- /container -->
+
+  <!-- Bottom watercolor divider with route-line motif -->
+  <div class="sui-bottom-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sui-fade-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#E8D8F5" stop-opacity="0"></stop>
+          <stop offset="100%" stop-color="#24183D" stop-opacity="1"></stop>
+        </linearGradient>
+      </defs>
+      <!-- Watercolor torn edge -->
+      <path d="M0,90 L0,42 Q30,36 60,44 T120,38 Q160,44 200,36 T280,42 Q320,36 360,44 T440,36 Q480,42 520,38 T600,44 Q640,36 680,42 T760,36 Q800,44 840,38 T920,44 Q960,36 1000,42 T1080,36 Q1120,44 1160,38 T1200,42 L1200,90 Z" fill="#24183D"></path>
+      <!-- Route line overlay on divider -->
+      <path d="M0,55 Q60,50 120,56 T240,52 T360,56 T480,52 T600,56 T720,52 T840,56 T960,52 T1080,56 T1200,52" fill="#24183D" stroke="#C9A84C" stroke-width="0.8" stroke-dasharray="5,9" opacity="0.25"></path>
+    </svg>
+  </div>
+
+</section>
+
+<section class="story-universe-characters-section" data-layout-spec="יקום הסיפורים-characters" dir="rtl">
+
+  <!-- Decorative star-dust scatter -->
+  <div class="chars-stardust" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <g opacity="0.18" fill="#FFD700">
+        <polygon points="20,40 22,46 28,46 23,50 25,56 20,52 15,56 17,50 12,46 18,46"></polygon>
+        <polygon points="360,80 362,86 368,86 363,90 365,96 360,92 355,96 357,90 352,86 358,86"></polygon>
+        <polygon points="80,200 82,206 88,206 83,210 85,216 80,212 75,216 77,210 72,206 78,206"></polygon>
+        <polygon points="320,300 322,306 328,306 323,310 325,316 320,312 315,316 317,310 312,306 318,306"></polygon>
+        <polygon points="50,450 52,456 58,456 53,460 55,466 50,462 45,466 47,460 42,456 48,456"></polygon>
+        <polygon points="370,500 372,506 378,506 373,510 375,516 370,512 365,516 367,510 362,506 368,506"></polygon>
+        <circle cx="150" cy="120" r="2.5"></circle>
+        <circle cx="280" cy="180" r="2"></circle>
+        <circle cx="100" cy="350" r="3"></circle>
+        <circle cx="340" cy="420" r="2"></circle>
+        <circle cx="200" cy="560" r="2.5"></circle>
+        <circle cx="30" cy="280" r="2"></circle>
+      </g>
+    </svg>
+  </div>
+
+  <div class="chars-container">
+
+    <!-- Section Header -->
+    <div class="chars-header">
+      <div class="chars-header-ornament" aria-hidden="true">
+        <svg data-no-icon-edit="true" aria-hidden="true" width="160" height="24" viewBox="0 0 160 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="12" x2="55" y2="12" stroke="rgba(212,168,67,0.5)" stroke-width="1"></line>
+          <polygon points="65,12 72,6 79,12 72,18" fill="none" stroke="rgba(212,168,67,0.7)" stroke-width="1"></polygon>
+          <polygon points="80,12 87,6 94,12 87,18" fill="rgba(212,168,67,0.3)" stroke="rgba(212,168,67,0.7)" stroke-width="1"></polygon>
+          <polygon points="95,12 102,6 109,12 102,18" fill="none" stroke="rgba(212,168,67,0.7)" stroke-width="1"></polygon>
+          <line x1="119" y1="12" x2="160" y2="12" stroke="rgba(212,168,67,0.5)" stroke-width="1"></line>
+        </svg>
+      </div>
+      <p class="chars-eyebrow">יקום הסיפורים</p>
+      <h2 class="chars-title">הגיבורים שלנו</h2>
+      <p class="chars-subtitle">שלושה לבבות, מסע אחד, ואבן קסומה שמחכה לגילוי</p>
+    </div>
+
+    <!-- Character Panels -->
+    <div class="chars-panels">
+
+      <!-- Panel 1: Anna -->
+      <article class="char-panel char-panel--anna">
+        <div class="char-panel-inner">
+          <div class="char-image-frame">
+            <div class="char-emblem char-emblem--anna" aria-hidden="true">
+              <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" width="120" height="120">
+                <polygon points="60,8 70,40 104,40 77,60 88,92 60,72 32,92 43,60 16,40 50,40" fill="none" stroke="rgba(212,168,67,0.4)" stroke-width="1.5"></polygon>
+                <circle cx="60" cy="60" r="28" fill="none" stroke="rgba(212,168,67,0.25)" stroke-width="1"></circle>
+              </svg>
+            </div>
+            <div class="char-image-wrapper">
+              <img data-placeholder="story-universe-characters-image-1" data-context="Fantasy portrait of Anna, a 14-year-old princess with determined eyes and flowing dark hair adorned with a small crown, wearing royal purple and gold fantasy armor-dress, magical glowing light emanating from her hands, dramatic cinematic lighting with deep indigo and violet atmospheric background, painterly fantasy illustration style, collectible chapter poster aesthetic, rich saturated magical colors" width="600" height="750" src="/assets/site-story-universe-characters-image-1.webp" alt="אנה — הנסיכה האמיצה">
+            </div>
+            <div class="char-number" aria-hidden="true">I</div>
+          </div>
+          <div class="char-text-panel">
+            <div class="char-role-badge">גיבורת הסיפור</div>
+            <h3 class="char-name">אנה</h3>
+            <p class="char-tagline">הנסיכה שבחרה את דרכה שלה</p>
+            <p class="char-desc">אנה היא נסיכה בת 14 שמסרבת לחיות לפי הכללים של עולם גזעני ומחולק. כשהוריה נחטפים ביום הולדתה, היא מגלה שהאומץ האמיתי לא נמצא בכתר — אלא בלב. עם חרב ביד ורגשות סוערים בנשמה, היא יוצאת למסע שישנה אותה לנצח. בין תחפושות פנטזיה מרהיבות לרוח בלתי נשברת, אנה היא הגיבורה שכל ילדה ראויה לה.</p>
+            <div class="char-traits">
+              <span class="char-trait">אומץ</span>
+              <span class="char-trait">צדק</span>
+              <span class="char-trait">עצמאות</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Divider ornament between panels -->
+      <div class="chars-panel-divider" aria-hidden="true">
+        <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 300 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="300" height="20">
+          <line x1="0" y1="10" x2="130" y2="10" stroke="rgba(212,168,67,0.3)" stroke-width="1"></line>
+          <diamond></diamond>
+          <polygon points="150,4 156,10 150,16 144,10" fill="rgba(212,168,67,0.5)"></polygon>
+          <line x1="170" y1="10" x2="300" y2="10" stroke="rgba(212,168,67,0.3)" stroke-width="1"></line>
+        </svg>
+      </div>
+
+      <!-- Panel 2: Romantic Partner -->
+      <article class="char-panel char-panel--partner">
+        <div class="char-panel-inner char-panel-inner--alt">
+          <div class="char-image-frame">
+            <div class="char-emblem char-emblem--partner" aria-hidden="true">
+              <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" width="120" height="120">
+                <rect x="20" y="20" width="80" height="80" rx="4" fill="none" stroke="rgba(43,182,168,0.4)" stroke-width="1.5" transform="rotate(45 60 60)"></rect>
+                <circle cx="60" cy="60" r="20" fill="none" stroke="rgba(43,182,168,0.25)" stroke-width="1"></circle>
+              </svg>
+            </div>
+            <div class="char-image-wrapper">
+              <img data-placeholder="story-universe-characters-image-2" data-context="Fantasy portrait of a teenage boy, Anna romantic partner, handsome with kind warm eyes and windswept brown hair, wearing adventurer fantasy clothing in teal and deep blue tones, holding a magical glowing compass or artifact, dramatic side lighting with teal and cyan magical glow, cinematic fantasy illustration style, collectible chapter poster aesthetic, emotional and heroic expression, painterly rich colors" width="600" height="750" src="/assets/site-story-universe-characters-image-2.webp" alt="בן הזוג של אנה — האלי הרומנטי">
+            </div>
+            <div class="char-number char-number--alt" aria-hidden="true">II</div>
+          </div>
+          <div class="char-text-panel">
+            <div class="char-role-badge char-role-badge--teal">בן הזוג</div>
+            <h3 class="char-name">הנסיך האמין</h3>
+            <p class="char-tagline">האהבה שצומחת בין ניצוצות</p>
+            <p class="char-desc">הוא לא ביקש להיות גיבור — אבל הוא לא יכול לעזוב את אנה לבד. חכם, רגיש ועם לב ענק, הוא הולך לצידה בכל צעד מסוכן ובכל רגע של ספק. ביניהם מתפתחת אהבה אמיתית, עדינה וסוערת בו זמנית — כזו שנולדת רק כשמסתכנים ביחד. הוא מזכיר לה שאפשר להיות חזק ורגיש בו זמנית.</p>
+            <div class="char-traits">
+              <span class="char-trait char-trait--teal">נאמנות</span>
+              <span class="char-trait char-trait--teal">חוכמה</span>
+              <span class="char-trait char-trait--teal">אהבה</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Divider ornament between panels -->
+      <div class="chars-panel-divider" aria-hidden="true">
+        <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 300 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="300" height="20">
+          <line x1="0" y1="10" x2="130" y2="10" stroke="rgba(212,168,67,0.3)" stroke-width="1"></line>
+          <polygon points="150,4 156,10 150,16 144,10" fill="rgba(212,168,67,0.5)"></polygon>
+          <line x1="170" y1="10" x2="300" y2="10" stroke="rgba(212,168,67,0.3)" stroke-width="1"></line>
+        </svg>
+      </div>
+
+      <!-- Panel 3: Matty -->
+      <article class="char-panel char-panel--matty">
+        <div class="char-panel-inner">
+          <div class="char-image-frame">
+            <div class="char-emblem char-emblem--matty" aria-hidden="true">
+              <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" width="120" height="120">
+                <circle cx="60" cy="60" r="40" fill="none" stroke="rgba(255,183,3,0.4)" stroke-width="1.5" stroke-dasharray="6 3"></circle>
+                <circle cx="60" cy="60" r="25" fill="none" stroke="rgba(255,183,3,0.25)" stroke-width="1"></circle>
+                <circle cx="60" cy="60" r="8" fill="rgba(255,183,3,0.2)"></circle>
+              </svg>
+            </div>
+            <div class="char-image-wrapper">
+              <img data-placeholder="story-universe-characters-image-3" data-context="Fantasy portrait of Matty, a hilariously funny anthropomorphic dog character, a golden retriever standing upright wearing a ridiculous mismatched adventurer outfit with a too-large hat, tongue hanging out with a goofy grin, wide excited eyes, carrying a comically oversized backpack with items falling out, warm golden and amber magical lighting, painterly fantasy illustration style, collectible chapter poster aesthetic, comedic yet lovable expression, vibrant saturated colors" width="600" height="750" src="/assets/site-story-universe-characters-image-3.webp" alt="מאטי — הכלב המואנש המצחיק">
+            </div>
+            <div class="char-number char-number--gold" aria-hidden="true">III</div>
+          </div>
+          <div class="char-text-panel">
+            <div class="char-role-badge char-role-badge--gold">הכלב המואנש</div>
+            <h3 class="char-name">מאטי</h3>
+            <p class="char-tagline">הכסיל הכי נאמן בכל הממלכה</p>
+            <p class="char-desc">מאטי הוא הכלב המואנש של אנה — ומשהו שבין קומיקאי מקצועי לאסון הליכה. הוא נכשל בכל משימה בדרך הכי מצחיקה האפשרית, אבל כשמגיע הרגע האמיתי, ליבו האדיר מפתיע את כולם. הוא הסיבה שצעצועים ומתנות לאוהבי פנטזיה תמיד יזכרו אותו בחיוך — כי בעולם של גיבורים, מאטי מזכיר לנו שמותר גם לצחוק.</p>
+            <div class="char-traits">
+              <span class="char-trait char-trait--gold">הומור</span>
+              <span class="char-trait char-trait--gold">נאמנות</span>
+              <span class="char-trait char-trait--gold">כאוס מתוק</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+    <!-- End panels -->
+
+  </div>
+  <!-- End container -->
+
+  <!-- Bottom crystal-edge divider -->
+  <div class="chars-crystal-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,90 L0,55 L60,70 L120,42 L180,65 L240,30 L300,58 L360,18 L420,50 L480,28 L540,60 L600,15 L660,48 L720,22 L780,55 L840,10 L900,45 L960,25 L1020,62 L1080,35 L1140,58 L1200,40 L1200,90 Z" fill="#1A0A2E"></path>
+    </svg>
+  </div>
+
+</section>
+
+<section class="story-universe-conflict-section" data-layout-spec="יקום הסיפורים-conflict" dir="rtl">
+
+  <!-- Background decorative elements -->
+  <div class="sucs-bg-layer" aria-hidden="true"></div>
+  <div class="sucs-stars" aria-hidden="true"></div>
+
+  <!-- Decorative floating crystal -->
+  <svg class="sucs-deco-crystal" data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg" width="120" height="140">
+    <polygon points="60,4 110,40 110,100 60,136 10,100 10,40" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.22"></polygon>
+    <polygon points="60,20 94,44 94,96 60,120 26,96 26,44" fill="none" stroke="#FFD700" stroke-width="0.7" opacity="0.15"></polygon>
+    <line x1="60" y1="4" x2="60" y2="136" stroke="#FFD700" stroke-width="0.5" opacity="0.12"></line>
+    <line x1="10" y1="40" x2="110" y2="100" stroke="#FFD700" stroke-width="0.5" opacity="0.10"></line>
+    <line x1="110" y1="40" x2="10" y2="100" stroke="#FFD700" stroke-width="0.5" opacity="0.10"></line>
+  </svg>
+
+  <!-- Decorative star scatter -->
+  <svg class="sucs-deco-stars" data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg" width="200" height="300">
+    <circle cx="30" cy="20" r="2" fill="#FFD700" opacity="0.25"></circle>
+    <circle cx="80" cy="60" r="1.5" fill="#FFD700" opacity="0.18"></circle>
+    <circle cx="150" cy="30" r="2.5" fill="#FFD700" opacity="0.20"></circle>
+    <circle cx="50" cy="110" r="1.2" fill="#C9A84C" opacity="0.22"></circle>
+    <circle cx="170" cy="90" r="2" fill="#FFD700" opacity="0.15"></circle>
+    <circle cx="20" cy="180" r="1.8" fill="#FFD700" opacity="0.20"></circle>
+    <circle cx="120" cy="150" r="1.3" fill="#C9A84C" opacity="0.18"></circle>
+    <circle cx="190" cy="200" r="2.2" fill="#FFD700" opacity="0.22"></circle>
+    <circle cx="60" cy="250" r="1.5" fill="#FFD700" opacity="0.16"></circle>
+    <path d="M100,10 L102,16 L108,16 L103,20 L105,26 L100,22 L95,26 L97,20 L92,16 L98,16 Z" fill="#FFD700" opacity="0.20"></path>
+    <path d="M180,140 L181.5,144.5 L186,144.5 L182.5,147 L184,151.5 L180,149 L176,151.5 L177.5,147 L174,144.5 L178.5,144.5 Z" fill="#FFD700" opacity="0.18"></path>
+  </svg>
+
+  <div class="sucs-container">
+
+    <!-- Section Header -->
+    <header class="sucs-header">
+      <div class="sucs-chapter-label">פרק הקונפליקט</div>
+      <h2 class="sucs-title">עולם שבור, לב אחד שנותר לעמוד</h2>
+      <p class="sucs-subtitle">בעולם שבו גזע קובע גורל, אנה מסרבת לשתוק — ואז הכל מתפרק ביום אחד</p>
+    </header>
+
+    <nav class="zappy-catalog-menu rtl" id="zappy-catalog-menu" dir="rtl" style="display:none">
+      <div class="catalog-menu-container">
+        <a href="/products" class="catalog-menu-item catalog-menu-all">כל המוצרים</a>
+        <div class="catalog-menu-categories" id="zappy-category-links">
+          <!-- Categories will be loaded dynamically -->
+        </div>
+      </div>
+    </nav>
+  
+
+    <!-- Two Stacked Contrast Cards -->
+    <div class="sucs-cards-stack">
+
+      <!-- Card 1: Social Injustice -->
+      <article class="sucs-card sucs-card--injustice">
+        <div class="sucs-card-glow sucs-card-glow--purple" aria-hidden="true"></div>
+        <div class="sucs-card-inner">
+          <div class="sucs-card-content">
+            <div class="sucs-card-tag">עוול חברתי</div>
+            <h3 class="sucs-card-title">כשהמוצא שלך הוא גזר דינך</h3>
+            <p class="sucs-card-text">בממלכה שבה בני האדם והחיות המואנשות חיים בצל חומות בלתי נראות, הכללים ברורים לכולם — אך לא לאנה. הנסיכה בת ה-14 רואה את העוול הגלום בכל פינה: בשוק, בחצר, ובחדרי הארמון עצמם. היא אינה יכולה לקבל עולם שבו מי שאתה חשוב יותר ממה שאתה מסוגל לעשות. בעולם של תחפושות פנטזיה ומדע בדיוני שמסתירות זהויות, אנה בוחרת לחשוף את האמת.</p>
+            <ul class="sucs-card-list">
+              <li><span class="sucs-list-dot" aria-hidden="true"></span>חיות מואנשות כפופות לחוקים שהן לא כתבו</li>
+              <li><span class="sucs-list-dot" aria-hidden="true"></span>הארמון שומר על שלום — במחיר הדממה</li>
+              <li><span class="sucs-list-dot" aria-hidden="true"></span>אנה מסרבת לשחק את תפקיד הנסיכה השקטה</li>
+            </ul>
+          </div>
+          <figure class="sucs-card-image-wrap">
+            <img data-placeholder="story-universe-conflict-image-1" data-context="A dramatic fantasy scene showing a young princess with dark hair standing at a palace balcony overlooking a divided city at twilight — one side gleaming and golden for humans, the other shadowed and worn for anthropomorphic animal citizens. The atmosphere is midnight plum and deep indigo with glowing fissures of gold light in the ground. Cinematic, painterly, emotionally charged illustration style." width="480" height="320" src="/assets/site-story-universe-conflict-image-1.webp" alt="אנה מביטה על עולם מחולק — ממלכה שבה בני אדם וחיות מואנשות חיים בנפרד">
+            <div class="sucs-img-overlay" aria-hidden="true"></div>
+          </figure>
+        </div>
+        <div class="sucs-card-border-glow" aria-hidden="true"></div>
+      </article>
+
+      <!-- Card 2: The Quest and Rising Threat -->
+      <article class="sucs-card sucs-card--quest">
+        <div class="sucs-card-glow sucs-card-glow--teal" aria-hidden="true"></div>
+        <div class="sucs-card-inner sucs-card-inner--reversed">
+          <figure class="sucs-card-image-wrap">
+            <img data-placeholder="story-universe-conflict-image-2" data-context="A perilous fantasy journey scene: a teenage girl princess, a young male companion, and a large goofy anthropomorphic dog with expressive eyes walking through a dark enchanted forest with glowing magical stones embedded in the ground and monstrous shadowy creatures lurking in the mist. The mood is tense yet adventurous, midnight plum and deep teal color palette, glowing fissures, cinematic fantasy illustration style." width="480" height="320" src="/assets/site-story-universe-conflict-image-2.webp" alt="אנה, בן זוגה ומאטי הכלב המואנש יוצאים למסע מסוכן לחפש את אבן הקסמים">
+            <div class="sucs-img-overlay sucs-img-overlay--teal" aria-hidden="true"></div>
+          </figure>
+          <div class="sucs-card-content">
+            <div class="sucs-card-tag sucs-card-tag--teal">המסע הבלתי אפשרי</div>
+            <h3 class="sucs-card-title">אבן אחת, עולם שלם על הכף</h3>
+            <p class="sucs-card-text">כשהמלך והמלכה נחטפים ביום ההולדת ה-14 של אנה, לא נשאר לה זמן לבכות. יחד עם בן זוגה — שמסתבר שהלב שלה כבר מכיר אותו טוב ממה שחשבה — ועם מאטי, הכלב המואנש הכסיל והמצחיק ביותר בממלכה, היא יוצאת לחפש את אבן הקסמים. אך האויבים שמחכים להם בדרך הם מעבר לכל דמיון: יצורים עתיקים, כוחות אפלים, ומישהו בתוך הארמון עצמו שלא רוצה שהיא תצליח.</p>
+            <ul class="sucs-card-list">
+              <li><span class="sucs-list-dot sucs-list-dot--teal" aria-hidden="true"></span>חטיפת ההורים — הטריגר שמשנה הכל</li>
+              <li><span class="sucs-list-dot sucs-list-dot--teal" aria-hidden="true"></span>אויבים קשים מכל דמיון, בכל פנייה</li>
+              <li><span class="sucs-list-dot sucs-list-dot--teal" aria-hidden="true"></span>אהבה, הומור ואומץ — הנשק היחיד שנשאר</li>
+            </ul>
+          </div>
+        </div>
+        <div class="sucs-card-border-glow sucs-card-border-glow--teal" aria-hidden="true"></div>
+      </article>
+
+    </div>
+    <!-- End cards stack -->
+
+  </div>
+  <!-- End container -->
+
+  <!-- Bottom Divider: mist-to-light dissolve with spark particles -->
+  <div class="sucs-divider-wrapper" aria-hidden="true">
+    <!-- Spark particles -->
+    <div class="sucs-sparks" aria-hidden="true">
+      <span class="sucs-spark sucs-spark--1"></span>
+      <span class="sucs-spark sucs-spark--2"></span>
+      <span class="sucs-spark sucs-spark--3"></span>
+      <span class="sucs-spark sucs-spark--4"></span>
+      <span class="sucs-spark sucs-spark--5"></span>
+      <span class="sucs-spark sucs-spark--6"></span>
+      <span class="sucs-spark sucs-spark--7"></span>
+    </div>
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sucs-mist-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1A0A2E" stop-opacity="0"></stop>
+          <stop offset="60%" stop-color="#E8D8F5" stop-opacity="0.6"></stop>
+          <stop offset="100%" stop-color="#E8D8F5" stop-opacity="1"></stop>
+        </linearGradient>
+      </defs>
+      <path d="M0,100 L0,55 Q80,38 160,52 T320,42 Q400,50 480,36 T640,48 Q720,40 800,54 T960,38 Q1040,50 1120,42 T1200,52 L1200,100 Z" fill="#E8D8F5"></path>
+      <path d="M0,100 L0,70 Q100,58 200,68 T400,60 Q500,68 600,56 T800,65 Q900,56 1000,68 T1200,62 L1200,100 Z" fill="#E8D8F5" opacity="0.85"></path>
+      <path d="M0,100 L0,82 Q150,74 300,82 T600,76 Q750,82 900,74 T1200,80 L1200,100 Z" fill="#E8D8F5"></path>
+    </svg>
+  </div>
+
+</section>
+
+<section class="story-universe-worldbuilding-section" data-layout-spec="יקום הסיפורים-worldbuilding" dir="rtl">
+
+  <!-- Parchment texture overlay -->
+  <div class="swb-texture-overlay" aria-hidden="true"></div>
+
+  <!-- Decorative star scatter -->
+  <svg class="swb-star-scatter" data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+    <g fill="#FFD700" opacity="0.18">
+      <polygon points="10,5 11.5,9 16,9 12.5,11.5 14,16 10,13.5 6,16 7.5,11.5 4,9 8.5,9"></polygon>
+      <polygon points="60,40 61,43 64,43 61.5,44.8 62.5,48 60,46.2 57.5,48 58.5,44.8 56,43 59,43"></polygon>
+      <polygon points="140,20 141.2,23.5 145,23.5 142,25.5 143.2,29 140,27 136.8,29 138,25.5 135,23.5 138.8,23.5"></polygon>
+      <polygon points="180,80 181,83 184,83 181.5,84.8 182.5,88 180,86.2 177.5,88 178.5,84.8 176,83 179,83"></polygon>
+      <polygon points="30,150 31,153 34,153 31.5,154.8 32.5,158 30,156.2 27.5,158 28.5,154.8 26,153 29,153"></polygon>
+      <polygon points="170,200 171.2,203.5 175,203.5 172,205.5 173.2,209 170,207 166.8,209 168,205.5 165,203.5 168.8,203.5"></polygon>
+      <circle cx="90" cy="70" r="2"></circle>
+      <circle cx="155" cy="120" r="1.5"></circle>
+      <circle cx="25" cy="220" r="1.5"></circle>
+      <circle cx="185" cy="260" r="2"></circle>
+      <circle cx="110" cy="180" r="1"></circle>
+    </g>
+  </svg>
+
+  <!-- Ornamental corner flourish -->
+  <svg class="swb-corner-flourish" data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke="#C9A84C" stroke-width="1.2" opacity="0.32">
+      <path d="M10,10 Q40,10 40,40"></path>
+      <path d="M10,10 Q10,40 40,40"></path>
+      <path d="M5,5 Q50,5 50,50"></path>
+      <path d="M5,5 Q5,50 50,50"></path>
+      <circle cx="10" cy="10" r="3" fill="#C9A84C"></circle>
+      <circle cx="40" cy="40" r="2" fill="#C9A84C"></circle>
+      <circle cx="70" cy="15" r="1.5" fill="#C9A84C"></circle>
+      <circle cx="15" cy="70" r="1.5" fill="#C9A84C"></circle>
+      <path d="M60,10 Q80,30 60,50"></path>
+      <path d="M10,60 Q30,80 50,60"></path>
+    </g>
+  </svg>
+
+  <div class="swb-container">
+
+    <!-- Section Header -->
+    <header class="swb-header">
+      <div class="swb-gem-dot" aria-hidden="true"></div>
+      <p class="swb-eyebrow">יקום הסיפורים</p>
+      <h2 class="swb-title">ממלכות, קסם ויצורים</h2>
+      <p class="swb-subtitle">העולם של אנה ואבן הקסמים הוא מקום עשיר ומסתורי — מלא בממלכות מפוארות, חפצים קסומים, יצורים מואנשים ומסלולי הרפתקה שלא ניתן לדמיין. כל ספר, משחק וציור מגלה שכבה נוספת ביקום שמחכה לכם.</p>
+    </header>
+
+    <!-- Four Cards Grid -->
+    <div class="swb-grid">
+
+      <!-- Card 1: Kingdoms -->
+      <article class="swb-card">
+        <figure class="swb-card-image-wrap">
+          <img data-placeholder="story-universe-worldbuilding-image-1" data-context="A majestic fantasy royal palace with towering purple and gold spires, glowing magical windows, surrounded by enchanted forests and floating lanterns at twilight. Rich painterly illustration style, cinematic fantasy, lavender and gold color palette, for a young adult fantasy brand called Anna and the Magic Stone." width="600" height="340" src="/assets/site-story-universe-worldbuilding-image-1.webp" alt="ממלכת אנה — ארמון מלכותי קסום עם מגדלים זהובים">
+          <div class="swb-card-image-overlay" aria-hidden="true"></div>
+          <span class="swb-card-gem-accent" aria-hidden="true"></span>
+        </figure>
+        <div class="swb-card-body">
+          <div class="swb-card-label">
+            <svg data-element-type="icon" data-icon-type="svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            ממלכות ועולמות
+          </div>
+          <h3 class="swb-card-title">ממלכת הכתר הסגול</h3>
+          <p class="swb-card-text">בלב היקום של אנה שוכנת ממלכה מפוארת שבה בני אדם ויצורים מואנשים חיים בצל מתח עתיק. חצרות שיש, גנים קסומים ומסדרונות שמסתירים סודות מלכותיים — זהו הבית שאנה נאלצת לעזוב כדי להציל את הכול.</p>
+        </div>
+      </article>
+
+      <!-- Card 2: Magical Artifacts -->
+      <article class="swb-card">
+        <figure class="swb-card-image-wrap">
+          <img data-placeholder="story-universe-worldbuilding-image-2" data-context="A glowing magical gemstone floating above an ancient stone pedestal, surrounded by mystical runes and soft magical light rays in teal and gold. Dark atmospheric background with magical sparkles. Cinematic fantasy illustration for a young adult brand called Anna and the Magic Stone." width="600" height="340" src="/assets/site-story-universe-worldbuilding-image-2.webp" alt="אבן הקסמים — חפץ קסום זוהר עם אנרגיה מיסטית">
+          <div class="swb-card-image-overlay" aria-hidden="true"></div>
+          <span class="swb-card-gem-accent swb-gem-teal" aria-hidden="true"></span>
+        </figure>
+        <div class="swb-card-body">
+          <div class="swb-card-label">
+            <svg data-element-type="icon" data-icon-type="svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 14 8 20 8 15 12 17 18 12 14 7 18 9 12 4 8 10 8"></polygon></svg>
+            חפצים קסומים
+          </div>
+          <h3 class="swb-card-title">אבן הקסמים</h3>
+          <p class="swb-card-text">לא כל אבן היא רק אבן. זו שאנה מחפשת פועמת בלב היקום — היא מסוגלת לשבור קללות, לשחרר שבויים ולחשוף אמיתות נסתרות. אך כוחה בא במחיר שאף אחד לא ציפה לו. תחפושות וצעצועים בהשראתה מחכים לכם בחנות.</p>
+        </div>
+      </article>
+
+      <!-- Card 3: Creatures -->
+      <article class="swb-card">
+        <figure class="swb-card-image-wrap">
+          <img data-placeholder="story-universe-worldbuilding-image-3" data-context="A charming anthropomorphic dog character named Matty dressed in a royal adventure outfit, looking hilariously confused yet lovable. Illustrated in a warm fantasy style with expressive cartoon-like features, rich colors, playful and whimsical mood, for a young adult fantasy brand called Anna and the Magic Stone." width="600" height="340" src="/assets/site-story-universe-worldbuilding-image-3.webp" alt="מאטי — הכלב המואנש המצחיק של אנה בתלבושת הרפתקה">
+          <div class="swb-card-image-overlay" aria-hidden="true"></div>
+          <span class="swb-card-gem-accent swb-gem-purple" aria-hidden="true"></span>
+        </figure>
+        <div class="swb-card-body">
+          <div class="swb-card-label">
+            <svg data-element-type="icon" data-icon-type="svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M6 20v-2a6 6 0 0 1 12 0v2"></path></svg>
+            יצורים מואנשים
+          </div>
+          <h3 class="swb-card-title">מאטי וחבריו</h3>
+          <p class="swb-card-text">מאטי הוא הכלב המואנש הכסיל, הנאמן והמצחיק ביותר שאי פעם הלך לצד גיבורה. לצדו מאכלסים את העולם יצורים מואנשים מרתקים — חלקם ידידים, חלקם אויבים — כל אחד עם עולם פנימי מלא ועומק שמפתיע בכל פרק.</p>
+        </div>
+      </article>
+
+      <!-- Card 4: Adventure Routes -->
+      <article class="swb-card">
+        <figure class="swb-card-image-wrap">
+          <img data-placeholder="story-universe-worldbuilding-image-4" data-context="A fantastical illustrated adventure map showing enchanted forests, mysterious mountains, ancient ruins, winding rivers and magical landmarks. Parchment-style with painterly fantasy art, warm amber and deep purple tones, hand-drawn map aesthetic for a young adult fantasy brand called Anna and the Magic Stone." width="600" height="340" src="/assets/site-story-universe-worldbuilding-image-4.webp" alt="מפת ההרפתקה של אנה — יערות קסומים, הרים מסתוריים וחורבות עתיקות">
+          <div class="swb-card-image-overlay" aria-hidden="true"></div>
+          <span class="swb-card-gem-accent swb-gem-gold" aria-hidden="true"></span>
+        </figure>
+        <div class="swb-card-body">
+          <div class="swb-card-label">
+            <svg data-element-type="icon" data-icon-type="svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0h6"></path></svg>
+            מסלולי הרפתקה
+          </div>
+          <h3 class="swb-card-title">הדרך אל האבן</h3>
+          <p class="swb-card-text">מהארמון הנטוש ועד יער הצללים, מהמצוק הבוגד ועד מערת הרוחות — כל שלב במסע של אנה חושף נוף חדש ואויב בלתי צפוי. מפות ההרפתקה, משחקי הקופסה וציורי ה-AI לחדר מחיים את כל תחנה בדרך.</p>
+        </div>
+      </article>
+
+    </div>
+    <!-- End Grid -->
+
+    <!-- CTA -->
+    <div class="swb-cta-wrap">
+      <a href="/universe" class="btn-primary swb-cta-btn">
+        <i class="fa-solid fa-book-open" aria-hidden="true"></i>
+        גלו את יקום הסיפורים
+      </a>
+    </div>
+
+  </div>
+  <!-- End Container -->
+
+  <!-- Bottom Divider: Sweeping arc of layered map paper -->
+  <div class="swb-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Back layer (lighter) -->
+      <path d="M0,100 L0,55 Q150,30 300,50 Q450,68 600,40 Q750,14 900,45 Q1050,72 1200,48 L1200,100 Z" fill="#1A0A2E"></path>
+      <!-- Main arc fill matching next dark section -->
+      <path d="M0,100 L0,68 Q200,38 400,58 Q600,78 800,50 Q1000,24 1200,60 L1200,100 Z" fill="#1A0A2E"></path>
+    </svg>
+  </div>
+
+</section>
+
+<section class="story-universe-quote-block-section" data-layout-spec="יקום הסיפורים-quote-block" dir="rtl">
+  <!-- Decorative star-dust scatter -->
+  <svg class="sqb-stardust" aria-hidden="true" data-no-icon-edit="true" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g opacity="0.18">
+      <polygon points="20,40 23,48 31,48 25,53 27,61 20,56 13,61 15,53 9,48 17,48" fill="#FFD700"></polygon>
+      <polygon points="80,15 82,21 88,21 83,25 85,31 80,27 75,31 77,25 72,21 78,21" fill="#FFD700"></polygon>
+      <polygon points="150,60 152,66 158,66 153,70 155,76 150,72 145,76 147,70 142,66 148,66" fill="#FFD700"></polygon>
+      <polygon points="240,20 242,26 248,26 243,30 245,36 240,32 235,36 237,30 232,26 238,26" fill="#FFD700"></polygon>
+      <circle cx="55" cy="80" r="2.5" fill="#FFD700"></circle>
+      <circle cx="190" cy="35" r="2" fill="#FFD700"></circle>
+      <circle cx="270" cy="70" r="3" fill="#FFD700"></circle>
+      <circle cx="110" cy="100" r="1.5" fill="#FFD700"></circle>
+      <circle cx="30" cy="120" r="2" fill="#FFD700"></circle>
+      <circle cx="220" cy="90" r="2.5" fill="#FFD700"></circle>
+    </g>
+  </svg>
+
+  <!-- Decorative crystal top-right -->
+  <svg class="sqb-crystal" aria-hidden="true" data-no-icon-edit="true" viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g opacity="0.22">
+      <polygon points="60,5 110,40 95,120 25,120 10,40" stroke="#FFD700" stroke-width="1.5" fill="none"></polygon>
+      <line x1="60" y1="5" x2="60" y2="120" stroke="#FFD700" stroke-width="0.8"></line>
+      <line x1="10" y1="40" x2="110" y2="40" stroke="#FFD700" stroke-width="0.8"></line>
+      <line x1="25" y1="120" x2="110" y2="40" stroke="#FFD700" stroke-width="0.5"></line>
+      <line x1="95" y1="120" x2="10" y2="40" stroke="#FFD700" stroke-width="0.5"></line>
+    </g>
+  </svg>
+
+  <!-- Ornamental corner flourish -->
+  <svg class="sqb-flourish" aria-hidden="true" data-no-icon-edit="true" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g opacity="0.32" stroke="#C9A84C" stroke-width="1.2" fill="none">
+      <path d="M10,10 Q30,10 30,30 Q30,50 50,50 Q70,50 70,70 Q70,90 90,90"></path>
+      <path d="M10,10 Q10,30 30,30"></path>
+      <circle cx="10" cy="10" r="4" fill="#C9A84C" opacity="0.4"></circle>
+      <circle cx="30" cy="30" r="3" fill="#C9A84C" opacity="0.3"></circle>
+      <circle cx="50" cy="50" r="3" fill="#C9A84C" opacity="0.3"></circle>
+      <circle cx="70" cy="70" r="3" fill="#C9A84C" opacity="0.3"></circle>
+      <circle cx="90" cy="90" r="4" fill="#C9A84C" opacity="0.4"></circle>
+      <path d="M20,5 Q25,15 15,20" stroke="#C9A84C" stroke-width="0.8"></path>
+      <path d="M5,20 Q15,25 20,15" stroke="#C9A84C" stroke-width="0.8"></path>
+    </g>
+  </svg>
+
+  <div class="sqb-container">
+    <!-- Gold divider line top -->
+    <div class="sqb-rule-top" aria-hidden="true"></div>
+
+    <!-- Large quote mark -->
+    <div class="sqb-quote-mark" aria-hidden="true">“</div>
+
+    <!-- Main manifesto quote -->
+    <blockquote class="sqb-quote">
+      <h2 class="sqb-headline">בעולם שמחלק בין אנשים לחיות,<br>רק האומץ לאהוב יכול לשנות הכל</h2>
+    </blockquote>
+
+    <!-- Supporting paragraph -->
+    <p class="sqb-subtext">אנה לא בחרה להיות נסיכה — אבל היא בחרה להיות אמיצה. בין תחפושות פנטזיה ומדע בדיוני לצעצועים ומתנות לאוהבי פנטזיה, עולמה של אנה הוא תזכורת שדמיון, חמלה, והיכולת לבחור אחרת — הם הכוח הגדול ביותר שיש.</p>
+
+    <!-- Gold divider line bottom -->
+    <div class="sqb-rule-bottom" aria-hidden="true"></div>
+
+    <!-- CTA -->
+    <div class="sqb-cta-wrap">
+      <a href="/contact" class="sqb-btn-primary">
+        <span>הצטרפו לעולם הסיפור</span>
+        <i class="fas fa-star" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</section>
+  </main>
+  
+  <footer class="site-footer" dir="rtl">
+  <div class="footer-inner">
+    <div class="footer-top">
+
+      <!-- Column 1: Company Info -->
+      <div class="footer-col footer-brand">
+        <a href="/" class="footer-logo-link">
+          <img src="/assets/logo.webp" alt="אנה ואבן הקסמים" class="logo">
+        </a>
+        <p class="footer-tagline">עולם של קסם, ספרות, צעצועים ועיצוב — כל פרק מספר סיפור חדש.</p>
+        <div class="footer-social">
+          <a href="[facebook_handle]" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="[instagram_handle]" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="[whatsapp_handle]" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="footer-col">
+        <h3 class="footer-heading"><span class="heading-accent"></span>ניווט מהיר</h3>
+        <ul class="footer-links">
+          <li><a href="/story-universe">יקום הסיפורים</a></li>
+          <li><a href="/brand-experience">חוויית מותג</a></li>
+          <li><a href="/contact">צור קשר</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Contact Info -->
+      <div class="footer-col">
+        <h3 class="footer-heading"><span class="heading-accent"></span>יצירת קשר</h3>
+        <ul class="footer-contact">
+          <li>
+            <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+            <span class="contact-text"><a href="mailto:[business_email]">[business_email]</a></span>
+          </li>
+          <li>
+            <span class="contact-icon"><i class="fas fa-phone"></i></span>
+            <span class="contact-text"><a href="tel:[business_phone]">[business_phone]</a></span>
+          </li>
+          <li><a href="/"><span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+            <span class="contact-text">[business_address]</span></a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Decorative / Brand Verse -->
+      <div class="footer-col footer-verse-col">
+        <h3 class="footer-heading"><span class="heading-accent"></span>מהיקום שלנו</h3>
+        <blockquote class="footer-verse">
+          “בכל אבן קסמים טמון פרק חדש — פתח אותו.”
+        </blockquote>
+        <div class="footer-gem-deco" aria-hidden="true">
+          <span class="gem gem-1">✦</span>
+          <span class="gem gem-2">◆</span>
+          <span class="gem gem-3">✦</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Divider -->
+    <div class="footer-divider"></div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 אנה ואבן הקסמים. כל הזכויות שמורות.</p>
+      <div class="footer-legal">
+        <a href="/privacy">מדיניות פרטיות</a>
+        <span class="legal-sep" aria-hidden="true">·</span>
+        <a href="/terms">תנאי שימוש</a><span class="separator">|</span>
+            <a href="/return-policy" aria-label="מדיניות החזרות">
+              מדיניות החזרות
+            </a>
+        <span class="legal-sep" aria-hidden="true">·</span>
+        <a href="/accessibility">נגישות</a>
+        <span class="legal-sep" aria-hidden="true">·</span>
+        <a href="https://zappy5.com" target="_blank" class="zappy-attribution">נוצר באמצעות Zappy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+  
+  <a href="https://wa.me/[whatsapp_handle]" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <div data-integration="accessibility:toolbar"></div>
+
+    <script src="/script.js"></script>
+
+    <script id="zappy-mobile-submenu-script">
+    (function() {
+      function initMobileSubmenuToggles() {
+        if (window.innerWidth > 768) {
+          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
+          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
+          return;
+        }
+        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
+        items.forEach(function(li) {
+          if (li.querySelector('.mobile-submenu-toggle')) return;
+          var submenu = li.querySelector('.sub-menu');
+          var parentLink = li.querySelector(':scope > a');
+          if (!submenu || !parentLink) return;
+          var toggleBtn = document.createElement('button');
+          toggleBtn.className = 'mobile-submenu-toggle';
+          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+          toggleBtn.setAttribute('type', 'button');
+          parentLink.insertAdjacentElement('afterend', toggleBtn);
+          toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
+              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
+            });
+            submenu.classList.toggle('mobile-expanded');
+            toggleBtn.classList.toggle('expanded');
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
+      else { initMobileSubmenuToggles(); }
+      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
+      // Re-initialize when mobile menu becomes visible (MutationObserver)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes') {
+            var target = mutation.target;
+            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
+              setTimeout(initMobileSubmenuToggles, 100);
+            }
+          }
+        });
+      });
+      setTimeout(function() {
+        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
+          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+        });
+      }, 500);
+    })();
+    </script>
+
+    <script id="zappy-navbar-scroll-effect">
+    (function(){
+      var nb=document.querySelector('nav.navbar,.navbar:not(.zappy-catalog-menu)');
+      var cm=document.querySelector('.zappy-catalog-menu,#zappy-catalog-menu');
+      if(!nb)return;
+      var fb='rgba(231,221,242,0.85)';
+      var th=60;
+      var rs=getComputedStyle(document.documentElement);
+      var td=rs.getPropertyValue('--text-dark').trim()||'#1a1a1a';
+      var tl=rs.getPropertyValue('--text-light').trim()||'#ffffff';
+      var st=true?td:tl;
+      nb.style.transition='background 0.3s ease,backdrop-filter 0.3s ease,-webkit-backdrop-filter 0.3s ease,box-shadow 0.3s ease';
+      if(cm)cm.style.transition='background 0.3s ease,backdrop-filter 0.3s ease,-webkit-backdrop-filter 0.3s ease';
+      var neSel='a,.navbar-brand,.navbar-brand a,.dropdown-toggle,.mobile-toggle,.phone-header-btn,.mobile-hamburger-btn,.mobile-close-btn,.mobile-submenu-toggle,.nav-link';
+      var skipCls=['cart-link','login-link','nav-search-toggle','search-toggle'];
+      function sTC(c,clr){var els=c.querySelectorAll(neSel);for(var i=0;i<els.length;i++){var sk=false;if(els[i].closest('.sub-menu')||els[i].closest('.dropdown-menu')){sk=true;}for(var j=0;j<skipCls.length;j++){if(els[i].classList.contains(skipCls[j])){sk=true;break;}}if(!sk)els[i].style.setProperty('color',clr,'important');}}
+      function cTC(c){var els=c.querySelectorAll(neSel);for(var i=0;i<els.length;i++){if(els[i].closest('.sub-menu')||els[i].closest('.dropdown-menu'))continue;els[i].style.removeProperty('color');}}
+      function applyScrolled(){
+        nb.classList.add('scrolled');
+        if(window.innerWidth>768){
+          nb.style.setProperty('--frosted-text',st);
+          nb.style.setProperty('background-image','none','important');
+          nb.style.setProperty('background-color',fb,'important');
+          nb.style.backdropFilter='blur(12px)';nb.style.webkitBackdropFilter='blur(12px)';nb.style.boxShadow='0 2px 16px rgba(0,0,0,0.12)';
+          sTC(nb,st);
+        }
+        if(cm){cm.classList.add('scrolled');if(window.innerWidth>768){cm.style.setProperty('background',fb,'important');cm.style.setProperty('backdrop-filter','blur(12px)','important');cm.style.setProperty('-webkit-backdrop-filter','blur(12px)','important');sTC(cm,st);}}
+      }
+      function onS(){
+        if(window._zappyNavNoDarkHero) return;
+        if(window.innerWidth<=768){nb.classList.remove('scrolled');cTC(nb);if(cm){cm.classList.remove('scrolled');cTC(cm);}return;}
+        var y=window.scrollY||window.pageYOffset;
+        if(y>th){
+          nb.classList.add('scrolled');nb.style.setProperty('background-color',fb,'important');nb.style.setProperty('background-image','none','important');
+          nb.style.setProperty('--frosted-text',st);nb.style.backdropFilter='blur(12px)';nb.style.webkitBackdropFilter='blur(12px)';nb.style.boxShadow='0 2px 16px rgba(0,0,0,0.12)';
+          sTC(nb,st);
+          if(cm){cm.classList.add('scrolled');cm.style.setProperty('background',fb,'important');cm.style.setProperty('backdrop-filter','blur(12px)','important');cm.style.setProperty('-webkit-backdrop-filter','blur(12px)','important');sTC(cm,st);}
+        }else{
+          nb.classList.remove('scrolled');nb.style.setProperty('background-color','transparent','important');nb.style.removeProperty('background-image');
+          nb.style.removeProperty('--frosted-text');nb.style.backdropFilter='none';nb.style.webkitBackdropFilter='none';nb.style.boxShadow='none';
+          cTC(nb);
+          if(cm){cm.classList.remove('scrolled');cm.style.setProperty('background','transparent','important');cm.style.setProperty('backdrop-filter','none','important');cm.style.setProperty('-webkit-backdrop-filter','none','important');cTC(cm);}
+        }
+      }
+      function sLum(rv,gv,bv){rv/=255;gv/=255;bv/=255;rv=rv<=0.03928?rv/12.92:Math.pow((rv+0.055)/1.055,2.4);gv=gv<=0.03928?gv/12.92:Math.pow((gv+0.055)/1.055,2.4);bv=bv<=0.03928?bv/12.92:Math.pow((bv+0.055)/1.055,2.4);return 0.2126*rv+0.7152*gv+0.0722*bv;}
+      window.addEventListener('scroll',onS,{passive:true});
+      window.addEventListener('resize',onS,{passive:true});
+      onS();
+      var heroEl=document.querySelector('section[class*="hero"],[data-hero-type],main>section:first-child');
+      var hasDH=false;
+      if(heroEl){var hCs=getComputedStyle(heroEl);var hBI=hCs.backgroundImage;if(hBI&&hBI!=='none'){if(hBI.indexOf('url(')!==-1){var hM2=hCs.backgroundColor.match(/\d+/g);if(hM2&&hM2.length>=3){hasDH=sLum(parseInt(hM2[0]),parseInt(hM2[1]),parseInt(hM2[2]))<0.4;}else{hasDH=true;}}else if(hBI.indexOf('gradient')!==-1){var cM=hBI.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/g);if(cM&&cM.length>0){var tLm=0;for(var ci=0;ci<cM.length;ci++){var pts=cM[ci].match(/\d+/g);tLm+=sLum(parseInt(pts[0]),parseInt(pts[1]),parseInt(pts[2]));}hasDH=(tLm/cM.length)<0.4;}else{hasDH=true;}}else{hasDH=true;}}else{var hM=hCs.backgroundColor.match(/\d+/g);if(hM&&hM.length>=3){hasDH=sLum(parseInt(hM[0]),parseInt(hM[1]),parseInt(hM[2]))<0.4;}}}
+      if(!hasDH){window.removeEventListener('scroll',onS);window.removeEventListener('resize',onS);applyScrolled();window._zappyNavNoDarkHero=true;}
+    })();
+    </script>
+
+    <script id="zappy-mobile-lang-menu-script">
+    (function() {
+      function initMobileLangMenu() {
+        if (window.innerWidth > 768) {
+          var existingMenu = document.querySelector('.mobile-lang-menu');
+          if (existingMenu) existingMenu.remove();
+          return;
+        }
+        if (document.querySelector('.mobile-lang-menu')) return;
+        var switcher = document.querySelector('.lang-switcher');
+        if (!switcher) return;
+        var dropdown = switcher.querySelector('.lang-switcher-dropdown');
+        if (!dropdown) return;
+        var options = dropdown.querySelectorAll('.lang-option');
+        if (options.length === 0) return;
+        var navMenu = document.getElementById('navMenu') || document.querySelector('.nav-menu') || document.querySelector('nav ul');
+        if (!navMenu) return;
+        var currentLang = document.documentElement.lang || 'en';
+        var langConfigs = {
+          he: {name:'עברית',flag:'https://api.iconify.design/circle-flags/il.svg'},
+          en: {name:'English',flag:'https://api.iconify.design/circle-flags/us.svg'},
+          ar: {name:'العربية',flag:'https://api.iconify.design/circle-flags/sa.svg'},
+          fr: {name:'Français',flag:'https://api.iconify.design/circle-flags/fr.svg'},
+          es: {name:'Español',flag:'https://api.iconify.design/circle-flags/es.svg'},
+          de: {name:'Deutsch',flag:'https://api.iconify.design/circle-flags/de.svg'},
+          ru: {name:'Русский',flag:'https://api.iconify.design/circle-flags/ru.svg'},
+          zh: {name:'中文',flag:'https://api.iconify.design/circle-flags/cn.svg'},
+          ja: {name:'日本語',flag:'https://api.iconify.design/circle-flags/jp.svg'},
+          pt: {name:'Português',flag:'https://api.iconify.design/circle-flags/br.svg'},
+          it: {name:'Italiano',flag:'https://api.iconify.design/circle-flags/it.svg'},
+          ko: {name:'한국어',flag:'https://api.iconify.design/circle-flags/kr.svg'}
+        };
+        var container = document.createElement('div');
+        container.className = 'mobile-lang-menu';
+        var currentConfig = langConfigs[currentLang] || {name:currentLang,flag:''};
+        var toggleBtn = document.createElement('button');
+        toggleBtn.className = 'mobile-lang-toggle';
+        toggleBtn.type = 'button';
+        var currentFlagHtml = currentConfig.flag ? '<img src="' + currentConfig.flag + '" width="20" height="20" alt="" style="border-radius:50%;margin-right:8px;margin-left:8px;">' : '';
+        toggleBtn.innerHTML = currentFlagHtml + currentConfig.name;
+        container.appendChild(toggleBtn);
+        var optionsDiv = document.createElement('div');
+        optionsDiv.className = 'mobile-lang-options';
+        var currentLink = document.createElement('a');
+        currentLink.className = 'mobile-lang-option active';
+        currentLink.href = '#';
+        currentLink.innerHTML = currentFlagHtml + currentConfig.name;
+        optionsDiv.appendChild(currentLink);
+        options.forEach(function(opt) {
+          var link = document.createElement('a');
+          link.className = 'mobile-lang-option';
+          link.href = opt.getAttribute('href');
+          link.innerHTML = opt.innerHTML;
+          optionsDiv.appendChild(link);
+        });
+        container.appendChild(optionsDiv);
+        navMenu.appendChild(container);
+        toggleBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleBtn.classList.toggle('expanded');
+          optionsDiv.classList.toggle('expanded');
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileLangMenu); }
+      else { initMobileLangMenu(); }
+      window.addEventListener('resize', function() { clearTimeout(window._mlrt); window._mlrt = setTimeout(initMobileLangMenu, 250); });
+    })();
+    </script>
+</body>
+</html>
